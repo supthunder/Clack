@@ -27,17 +27,29 @@
     	});
     </script>
 </head>
-<body style="background: #575553">
+<body style="">
 	<h1 style="text-align: center">The choice is yours to make</h1>
 	<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 	<div style="text-align: center">
-	<button id= "choiceA" type="button" disabled class="btn btn-primary">A</button>
+
+      <div id='buttons'>
+
+  </div>
+  <script>
+  var maxChoice = 0;
+  socket.on("pollingOpen", function(event) {
+        maxChoice = choicesCount;
+         });
+  for (var i = 0; i <= maxChoice; i++){
+  $('#buttons').append('<input type="button" id="choice' + i + '" value="Choice ' + (i+1) + '"class="btn btn-primary"/>');
+  }
+</script>
+
+
+<!-- 	<button id= "choiceA" type="button" style="size: 60%" disabled class="btn btn-primary">A</button>
 	<button id= "choiceB" type="button" disabled class="btn btn-primary">B</button>
 	<button id= "choiceC" type="button" disabled class="btn btn-primary">C</button>
-	<button id= "choiceD" type="button" disabled class="btn btn-primary">D</button>
-	
-
-<a href="/"><img alt="HackUMBC Fall 2016" src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/challenge_photos/000/417/426/datas/full_width.png"></a>
+	<button id= "choiceD" type="button" disabled class="btn btn-primary">D</button> -->
 </div>
 	<script>
 
@@ -71,14 +83,11 @@ $("#choiceC").on('click', function(event) {
 $("#choiceD").on('click', function(event) {
         socket.emit('vote', {vote: "D"});
     });
-
-
-
-
-
 	</script>
 
 
 
 </body>
+<!-- 
+<footer style="position: fixed"><img alt="HackUMBC Fall 2016" src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/challenge_photos/000/417/426/datas/full_width.png"></footer> -->
 </html>
