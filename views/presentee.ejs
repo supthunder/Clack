@@ -31,16 +31,32 @@
 	<h1 style="text-align: center">The choice is yours to make</h1>
 	<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 	<div style="text-align: center">
-	<button id= "choiceA" type="button" class="btn btn-primary">A</button>
-	<button id= "choiceB" type="button" class="btn btn-primary">B</button>
-	<button id= "choiceC" type="button" class="btn btn-primary">C</button>
-	<button id= "choiceD" type="button" class="btn btn-primary">D</button>
+	<button id= "choiceA" type="button" disabled class="btn btn-primary">A</button>
+	<button id= "choiceB" type="button" disabled class="btn btn-primary">B</button>
+	<button id= "choiceC" type="button" disabled class="btn btn-primary">C</button>
+	<button id= "choiceD" type="button" disabled class="btn btn-primary">D</button>
 	</div>
 
 	<script>
+
+
+
+
 	function disappear(){
 	$(':button').prop('disabled', true);
 }
+
+	function appear(){
+			$(':button').prop('disabled', false);
+}
+
+	socket.on("pollingOpen", function(event) {
+    		appear();
+    		 });
+	socket.on("pollingClose", function(event) {
+    		disappear();
+    		 });
+
 $("#choiceA").on('click', function(event) {
         socket.emit('vote', {vote: "A"});
         disappear();
