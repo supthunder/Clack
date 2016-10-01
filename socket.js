@@ -30,6 +30,9 @@ module.exports = function(server) {
             state.pollingOpen = false;
             io.emit('pollingClose');
         });
+        socket.on('vote', function(data) {
+            debug(JSON.stringify(data));
+        }
     }
 
     io.on('connection', myHandler);
