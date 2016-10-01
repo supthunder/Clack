@@ -20,7 +20,7 @@ module.exports = function(server) {
         });
         socket.on('vote', function(data) {
             if (state.pollingOpen == false) {
-                socket.emit("error", "Polling is not open");
+                socket.emit("softerror", "Polling is not open");
                 return;
             }
             state.recordVote(data.vote, socket.uniqueid);
