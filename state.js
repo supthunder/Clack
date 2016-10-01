@@ -22,18 +22,17 @@ State.prototype.openPolls = function(choicesCount) {
     this.votes = {};
     this.studentSubmit = {};
     this.pollingOpen = true;
-    io.emit('pollingOpen', {choicesCount: choicesCount});
+    this.io.emit('pollingOpen', {choicesCount: choicesCount});
 }
 
 State.prototype.closePolls = function() {
     debug('closing votes');
     this.pollingOpen = false;
-    io.emit('pollingClose');
+    this.io.emit('pollingClose');
 }
 
 State.prototype.recordVote = function(vote, uniqueid) {
-    //TODO: do something
-
+    
     //if this user has never entered a vote before let's log it
     if(!(uniqueid in studentSubmit)){
         studentSubmit[uniqueid] = vote;
@@ -73,8 +72,4 @@ State.prototype.recordVote = function(vote, uniqueid) {
             } 
         }
     }    
-        
-    socket.emit('voteUpdate', {
-        count: 492,
-    });
 }

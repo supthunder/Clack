@@ -59,19 +59,15 @@
 
 $("#choiceA").on('click', function(event) {
         socket.emit('vote', {vote: "A"});
-        disappear();
     });
 $("#choiceB").on('click', function(event) {
         socket.emit('vote', {vote: "B"});
-        disappear();    
     });
 $("#choiceC").on('click', function(event) {
         socket.emit('vote', {vote: "C"});
-        disappear();
     });
 $("#choiceD").on('click', function(event) {
         socket.emit('vote', {vote: "D"});
-        disappear();
     });
 
 
