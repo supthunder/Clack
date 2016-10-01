@@ -29,10 +29,10 @@
       socket.on("debug", function(message) {
         alert(message);
       });
-    $(#open_votes).on('click', function(event) {
+    $("#open_votes").on('click', function(event) {
         socket.emit('openVotes');
     });
-    $(#close_votes).on('click', function(event) {
+    $("#close_votes").on('click', function(event) {
         socket.emit('closeVotes');
     });
     </script>
