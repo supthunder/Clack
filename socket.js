@@ -3,10 +3,13 @@ var debug = require('debug')('Clack:socketio');
 function myHandler(socket) {
     debug("user connected");
     setTimeout(function() {
-        socket.emit('message', "hi");
+        socket.emit('debug', "hi");
     }, 5000);
-    socket.on('message', function(msg) {
-        debug(msg);
+    socket.on('openVotes', function(msg) {
+        debug("should open votes");
+    });
+    socket.on('closeVotes', function(msg) {
+        debug("should close votes");
     });
 }
 
