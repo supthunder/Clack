@@ -26,10 +26,19 @@
     <div id=totalNumber>
     </div>
     <script>
+      // Compile templates
+      var votesCountTmpl = Handlebars.compile($("#votes").html());
       var socket = io();
       socket.on("debug", function(message) {
         alert(message);
       });
+      socket.on("voteUpdate", function(data) {
+        state = {
+          "vote_input": data.count,
+        }
+        $("#totalNumber").html(votesCountTmpl(state));
+      });
+
     $("#open_votes").on('click', function(event) {
         socket.emit('openVotes');
     });
