@@ -79,4 +79,9 @@ State.prototype.recordVote = function(vote, uniqueid) {
     }    
     // Now we need to update stats
     debug(this.votes);
+    this.sendUpdate();
+}
+
+State.prototype.sendUpdate = function() {
+    this.io.emit('voteUpdate', {votes: this.votes});
 }
