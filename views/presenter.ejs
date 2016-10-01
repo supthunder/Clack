@@ -4,15 +4,20 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <button id="mybutton">Don't Push The Button</button>
     <script>
       var socket = io();
       socket.on("message", function(message) {
         alert(message);
       });
+      document.querySelector('#mybutton').addEventListener('click',
+        function(event) {
+          socket.emit('message', "clicked the button!");
+        });
     </script>
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
   </body>
 </html>
