@@ -18,10 +18,15 @@ State.prototype.uniqueid = function() {
 
 State.prototype.openPolls = function(choicesCount) {
     debug('opening votes');
-    this.choicesCount = choicesCount;
     this.votes = {};
+    this.choicesCount = choicesCount;
     this.studentSubmit = {};
     this.pollingOpen = true;
+    var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for (i=0; i < choicesCount; i++) {
+        debug(alphabet[i]);
+        this.votes[alphabet[i]] = 0;
+    }
     this.io.emit('pollingOpen', {choicesCount: choicesCount});
 }
 
@@ -32,10 +37,9 @@ State.prototype.closePolls = function() {
 }
 
 State.prototype.recordVote = function(vote, uniqueid) {
-    
     //if this user has never entered a vote before let's log it
-    if(!(uniqueid in studentSubmit)){
-        studentSubmit[uniqueid] = vote;
+    if(!(uniqueid in this.studentSubmit)){
+        this.studentSubmit[uniqueid] = vote;
         
         //if this vote has never been chosen before
         if(!(vote in this.votes)){
@@ -51,25 +55,28 @@ State.prototype.recordVote = function(vote, uniqueid) {
     else{
 
         //get their previous submission which we will subtract the total count from later
-        previousChoice = studentSubmit[uniqueid];
+        previousChoice = this.studentSubmit[uniqueid];
     
         //If the choice they made is not the same as the choice they have made before
         // basically if they have made a new choice then do something
         if(previousChoice != vote){        
 
             //update their key with their new vote choice
-            studentSubmit[uniqueid] = vote;
+            this.studentSubmit[uniqueid] = vote;
 
-            //if the overall count for a choice is 1 that means when we decrement it'll be 0
-            // so we want to delete that entry in the dictionary
-            if(this.votes[previousChoice] - 1 == 0){
-                delete this.votes[previousChoice];
+            this.votes[previousChoice]--;
+
+            // If never chosen before
+            if(!(vote in this.votes)){
+                this.votes[vote] = 1;
             }
             
-            //if the count for this vote is more than one just decrement it's overall value
+            //if this vote has bee chose before
             else{
-                this.votes[vote]--;
-            } 
+                this.votes[vote]++;
+            }
         }
     }    
+    // Now we need to update stats
+    debug(this.votes);
 }
