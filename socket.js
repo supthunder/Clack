@@ -32,7 +32,7 @@ module.exports = function(server) {
         });
         socket.on('vote', function(data) {
             debug(JSON.stringify(data));
-        }
+        });
     }
 
     io.on('connection', myHandler);
