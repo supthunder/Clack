@@ -13,7 +13,7 @@ module.exports = function(server) {
         // XXX: Note, this means that anyone could open or close votes. We need
         // to only do this for presenter pages, but I don't feel like it yet.
         socket.on('openVotes', function(msg) {
-            state.openPolls();
+            state.openPolls(4);
         });
         socket.on('closeVotes', function(msg) {
             state.closePolls();

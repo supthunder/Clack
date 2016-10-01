@@ -18,10 +18,15 @@ State.prototype.uniqueid = function() {
 
 State.prototype.openPolls = function(choicesCount) {
     debug('opening votes');
-    this.choicesCount = choicesCount;
     this.votes = {};
+    this.choicesCount = choicesCount;
     this.studentSubmit = {};
     this.pollingOpen = true;
+    var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for (i=0; i < choicesCount; i++) {
+        debug(alphabet[i]);
+        this.votes[alphabet[i]] = 0;
+    }
     this.io.emit('pollingOpen', {choicesCount: choicesCount});
 }
 
