@@ -12,6 +12,9 @@ module.exports = function(server) {
         socket.uniqueid = state.uniqueid();
         // XXX: Note, this means that anyone could open or close votes. We need
         // to only do this for presenter pages, but I don't feel like it yet.
+        if (state.pollingOpen) {
+            socket.emit('pollingOpen', {choicesCount: state.choicesCount});
+        }
         socket.on('openVotes', function(msg) {
             state.openPolls(4);
         });
