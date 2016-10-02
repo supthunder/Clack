@@ -12,8 +12,8 @@ router.get('/presenter', function(req, res, next) {
 });
 
 /*test page*/
-router.get('/presentee', function(req, res, next) {
-  res.render('presentee', { title: 'Presentee View' });
+router.get('/audience', function(req, res, next) {
+  res.render('audience', { title: 'Audience View' });
 });
 
 module.exports = router;
