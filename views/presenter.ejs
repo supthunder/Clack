@@ -21,7 +21,9 @@
     <button id="open_votes">Open Votes</button>    
     <button id="close_votes">Close Votes</button>
     <script id=votes type="text/x-handlebars">
-        totalvotes:{{vote_input}}
+      {{#each votes}}
+        {{@key}}: {{this}}
+      {{/each}}
     </script> 
     <div id=totalNumber>
     </div>
@@ -33,10 +35,7 @@
         alert(message);
       });
       socket.on("voteUpdate", function(data) {
-        state = {
-          "vote_input": data.count,
-        }
-        $("#totalNumber").html(votesCountTmpl(state));
+        $("#totalNumber").html(votesCountTmpl(data));
       });
 
     $("#open_votes").on('click', function(event) {
