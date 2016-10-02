@@ -19,9 +19,10 @@
   <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <button id="open_votes">Open Votes</button>    
-    <button id="close_votes">Close Votes</button>
-    <script id=votes type="text/x-handlebars">
+    <h1>Presenter View</h1>
+    <button class="btn btn-primary" id="open_votes">Open Votes</button>    
+    <button class="btn btn-primary" id="close_votes">Close Votes</button>
+    <script id="votes" type="text/x-handlebars">
       {{#each votes}}
         {{@key}}: {{this}}
       {{/each}}

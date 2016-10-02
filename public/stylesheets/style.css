@@ -21,6 +21,15 @@ a {
 
 }
 
+.vote-button {
+    padding: 11px 25px;
+    margin-bottom: 11px;
+    font-size: 37px;
+}
+.vote-container {
+    text-align: center;
+}
+
 .glyphicon.spinning {
     animation: spin 1s infinite linear;
     -webkit-animation: spin2 1s infinite linear;

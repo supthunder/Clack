@@ -4,7 +4,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" /> 
   <title><%= title %></title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
-  <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <!-- Optional theme -->
@@ -19,56 +18,57 @@
   <script src="/socket.io/socket.io.js"></script>
 
 </head>
-<body style="">
+<body>
  <script>
   var socket = io();
 </script>
 
-<h1 style="text-align: center">The choice is yours to make</h1>
-<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-<div style="text-align: center">
-  <div id='buttons'>
+<div class="vote-container">
+  <h1>The choice is yours to make</h1>
+  <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+  <div id='buttons'></div>
   <div id='waiting'>
-    <h3>Waiting for poll</h3>
+    <h3>Polling is closed</h3>
     <span class="glyphicon glyphicon-refresh spinning"></span>
-  </div></div>
-
-  <!-- create socket -->
-  <script>
-    socket.on("debug", function(message) {
-      alert(message);
-    });
-
-
-    // create buttons with jQuery
-    function createButtons(choicesCount){
-      for (var i = 0; i < choicesCount; i++){
-        var letter = String.fromCharCode(65+i);
-        $('#buttons').append('<input type="button" onClick="vote(this.id)" id="' + letter + '" value="' + letter + '"class="btn btn-primary" style="padding: 11px 25px;margin-bottom: 11px;font-size: 37px;" </button><br>');}}
-
-        // removes buttons from page when poll is closed
-        function removeButtons(){
-            $("#buttons").html("");
-        }
-
-        //  creates buttons when poll is open
-        socket.on("pollingOpen", function(event) {
-          console.log("couches count: " +event.choicesCount);
-          $("#waiting").hide();
-          createButtons(event.choicesCount);});
-
-
-        //  calls remove 
-        socket.on("pollingClose", function(event) {
-          console.log('test');
-          removeButtons();}
-          );
-        function vote(id){
-          socket.emit('vote', {vote: id});
-        }
-
-        </script>
+  </div>
 </div>
+<!-- create socket -->
+<script>
+  socket.on("softerror", function(message) {
+    alert(message);
+  });
+
+
+  // create buttons with jQuery
+  function createButtons(choicesCount){
+    for (var i = 0; i < choicesCount; i++){
+      var letter = String.fromCharCode(65+i);
+      $('#buttons').append('<input type="button" onClick="vote(this.id)" id="' + letter + '" value="' + letter + '"class="btn btn-primary vote-button"></button><br>');}
+  }
+
+  // removes buttons from page when poll is closed
+  function removeButtons(){
+      $("#buttons").html("");
+  }
+
+  //  creates buttons when poll is open
+  socket.on("pollingOpen", function(event) {
+    console.log("choices count: " +event.choicesCount);
+    $("#waiting").hide();
+    removeButtons();
+    createButtons(event.choicesCount);});
+
+
+  //  calls remove 
+  socket.on("pollingClose", function(event) {
+    console.log('test');
+    removeButtons();
+    $("#waiting").show();
+  });
+  function vote(id){
+    socket.emit('vote', {vote: id});
+  }
+</script>
 
 
 <!--  old buttons for sample ... -->
