@@ -38,7 +38,7 @@
 
     // create buttons with jQuery
     function createButtons(choicesCount){
-      for (var i = 0; i <= choicesCount; i++){
+      for (var i = 0; i < choicesCount; i++){
         var letter = String.fromCharCode(65+i);
         $('#buttons').append('<input type="button" onClick="vote(this.id)" id="' + letter + '" value="' + letter + '"class="btn btn-primary"</button><br>');}}
 
