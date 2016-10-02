@@ -27,7 +27,11 @@
 <h1 style="text-align: center">The choice is yours to make</h1>
 <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 <div style="text-align: center">
-  <div id='buttons'></div>
+  <div id='buttons'>
+  <div id='waiting'>
+    <h3>Waiting for poll</h3>
+    <span class="glyphicon glyphicon-refresh spinning"></span>
+  </div></div>
 
   <!-- create socket -->
   <script>
@@ -40,7 +44,7 @@
     function createButtons(choicesCount){
       for (var i = 0; i < choicesCount; i++){
         var letter = String.fromCharCode(65+i);
-        $('#buttons').append('<input type="button" onClick="vote(this.id)" id="' + letter + '" value="' + letter + '"class="btn btn-primary" style="padding: 28px 38px;margin-bottom: 11px;font-size: 37px;" </button><br>');}}
+        $('#buttons').append('<input type="button" onClick="vote(this.id)" id="' + letter + '" value="' + letter + '"class="btn btn-primary" style="padding: 11px 25px;margin-bottom: 11px;font-size: 37px;" </button><br>');}}
 
         // removes buttons from page when poll is closed
         function removeButtons(){
@@ -50,7 +54,9 @@
         //  creates buttons when poll is open
         socket.on("pollingOpen", function(event) {
           console.log("couches count: " +event.choicesCount);
+          $("#waiting").hide();
           createButtons(event.choicesCount);});
+
 
         //  calls remove 
         socket.on("pollingClose", function(event) {
