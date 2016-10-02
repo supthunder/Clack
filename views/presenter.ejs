@@ -16,11 +16,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.2/lodash.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
     <h1>Presenter View</h1>
-    <button class="btn btn-primary" id="open_votes">Open Votes</button>    
+    <button class="btn btn-primary" id="open_votes">Open Votes</button>
     <button class="btn btn-primary" id="close_votes">Close Votes</button>
     <script id="votes" type="text/x-handlebars">
       {{#each votes}}
@@ -41,8 +42,8 @@
       var myChart = false;
       socket.on("voteUpdate", function(data) {
         $("#totalNumber").html(votesCountTmpl(data));
-        var labels = Object.keys(data.votes);
-        var data = Object.values(data.votes);
+        var labels = _.keys(data.votes);
+        var data = _.values(data.votes);
         var myChart = document.getElementById("myChart");
         var myData = [{
           x: labels,
