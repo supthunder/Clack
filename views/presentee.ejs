@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" /> 
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <!-- Optional theme -->
@@ -13,72 +15,65 @@
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  
   <script src="/socket.io/socket.io.js"></script>
 
-
-
-
-
-    <script>
-    	var socket = io();
-    	socket.on("message2", function(message2) {
-    		alert(message2);
-    	});
-    </script>
 </head>
-<body style="background: #575553">
-	<h1 style="text-align: center">The choice is yours to make</h1>
-	<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-	<div style="text-align: center">
-	<button id= "choiceA" type="button" disabled class="btn btn-primary">A</button>
+<body style="">
+ <script>
+  var socket = io();
+</script>
+
+<h1 style="text-align: center">The choice is yours to make</h1>
+<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+<div style="text-align: center">
+  <div id='buttons'></div>
+
+  <!-- create socket -->
+  <script>
+    socket.on("debug", function(message) {
+      alert(message);
+    });
+
+
+    // create buttons with jQuery
+    function createButtons(choicesCount){
+      for (var i = 0; i <= choicesCount; i++){
+        var letter = String.fromCharCode(65+i);
+        $('#buttons').append('<input type="button" onClick="vote(this.id)" id="' + letter + '" value="' + letter + '"class="btn btn-primary"</button><br>');}}
+
+        // removes buttons from page when poll is closed
+        function removeButtons(){
+            $("#buttons").html("");
+        }
+
+        //  creates buttons when poll is open
+        socket.on("pollingOpen", function(event) {
+          console.log("couches count: " +event.choicesCount);
+          createButtons(event.choicesCount);});
+
+        //  calls remove 
+        socket.on("pollingClose", function(event) {
+          console.log('test');
+          removeButtons();}
+          );
+        function vote(id){
+          socket.emit('vote', {vote: id});
+        }
+
+        </script>
+</div>
+
+
+<!--  old buttons for sample ... -->
+<!-- 	<button id= "choiceA" type="button" style="size: 60%" disabled class="btn btn-primary">A</button>
 	<button id= "choiceB" type="button" disabled class="btn btn-primary">B</button>
 	<button id= "choiceC" type="button" disabled class="btn btn-primary">C</button>
-	<button id= "choiceD" type="button" disabled class="btn btn-primary">D</button>
-	
-
-<a href="/"><img alt="HackUMBC Fall 2016" src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/challenge_photos/000/417/426/datas/full_width.png"></a>
-</div>
-	<script>
-
-
-
-
-	function disappear(){
-	$(':button').prop('disabled', true);
-}
-
-	function appear(){
-			$(':button').prop('disabled', false);
-}
-
-	socket.on("pollingOpen", function(event) {
-    		appear();
-    		 });
-	socket.on("pollingClose", function(event) {
-    		disappear();
-    		 });
-
-$("#choiceA").on('click', function(event) {
-        socket.emit('vote', {vote: "A"});
-    });
-$("#choiceB").on('click', function(event) {
-        socket.emit('vote', {vote: "B"});
-    });
-$("#choiceC").on('click', function(event) {
-        socket.emit('vote', {vote: "C"});
-    });
-$("#choiceD").on('click', function(event) {
-        socket.emit('vote', {vote: "D"});
-    });
-
-
-
-
-
-	</script>
+	<button id= "choiceD" type="button" disabled class="btn btn-primary">D</button> -->
 
 
 
 </body>
-</html>
+<!-- 
+  <footer style="position: fixed"><img alt="HackUMBC Fall 2016" src="https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/challenge_photos/000/417/426/datas/full_width.png"></footer> -->
+  </html>
