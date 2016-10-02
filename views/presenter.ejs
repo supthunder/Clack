@@ -53,8 +53,16 @@
         Plotly.newPlot('myChart', myData);
       });
 
+    function onOpenVotes() {
+      $("#totalNumber").html("");
+      Plotly.purge(document.getElementById("myChart"));
+      //$("#myChart").html("");
+    }
+    socket.on('pollingOpen', onOpenVotes);
+
     $("#open_votes").on('click', function(event) {
         socket.emit('openVotes');
+        onOpenVotes();
     });
     $("#close_votes").on('click', function(event) {
         socket.emit('closeVotes');

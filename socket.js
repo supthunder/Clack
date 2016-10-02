@@ -14,6 +14,7 @@ module.exports = function(server) {
         // to only do this for presenter pages, but I don't feel like it yet.
         if (state.pollingOpen) {
             socket.emit('pollingOpen', {choicesCount: state.choicesCount});
+            socket.emit('voteUpdate', {votes: state.votes});
         } else {
             socket.emit('pollingClose');
         }
