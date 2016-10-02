@@ -24,7 +24,6 @@ State.prototype.openPolls = function(choicesCount) {
     this.pollingOpen = true;
     var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     for (i=0; i < choicesCount; i++) {
-        debug(alphabet[i]);
         this.votes[alphabet[i]] = 0;
     }
     this.io.emit('pollingOpen', {choicesCount: choicesCount});
